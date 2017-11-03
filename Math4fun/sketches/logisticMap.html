@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<title>Logistic Map</title>
+<script>
+var width=height=500;
+var imgData;
+var ctx; 
+var plane; 
+function f(x,a,b){
+	return x*a*(1-x);
+}
+function iterate(x,a,b,n){
+	for(var i = 0; i < n; i++){
+		x = f(x,a,b);
+	}
+	return x;
+}
+function start(){
+	var plane = document.getElementById("canvas");
+	plane.width = width;
+	plane.height = height;
+	plane.style="border:1px solid #000000;";
+	ctx = plane.getContext("2d");
+	imgData = ctx.createImageData(width, height); 
+	var rows = Math.sqrt(imgData.data.length/4);
+	for(var y = 0; y < rows; y++){
+		a = map(y,0,rows,0,10);	
+		b = iterate(0.5,a,1,100);
+		b = map(b,0,1,0,rows);
+		for(var i = 0; i<20; i++){
+			pos = parseInt((b+rows*y)*4);
+			imgData.data[pos] = 255;
+			imgData.data[pos+1] = 255;
+			imgData.data[pos+2] = 255;
+			imgData.data[pos+3] = 255;
+			b = f(b,a,1);
+			b = map(b,0,1,0,rows); 	
+		}		
+	}
+	ctx.putImageData(imgData,0,0);
+	document.getElementById("canvas").style.cursor = "crosshair";
+}
+function map(val,a1,b1,a2,b2){
+	return ((b2-a2)*(val+a1)/(b1-a1))+a2;
+}
+</script>
+<body onLoad="start()">
+<table>
+	<tr>
+		<td>Scale:<input type="range" id="scale" onChange="drawSet()" value="0.1"></td>
+		<td>xPos:<input type="range" id="xpos" onChange="drawSet()" value="0"></td>
+		<td>yPos:<input type="range" id="ypos" onChange="drawSet()" value="0"></td>
+		<td>Iterarions:<input type="text" id="it" value="50" onChange="drawSet()"></td>
+	</tr>
+	<tr><canvas id="canvas" style="cursor:crosshair"></canvas></tr>
+</table>
+</body>
+</html>

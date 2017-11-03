@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>	
+    <head>
+        <title>primeSpace</title>
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+
+            table, td, th {
+                border: 1px solid black;
+            }
+        </style>
+    <script>
+        function ca() {
+            var p = 3;
+            var q = 2;
+            var a = 1;
+            var x = 1;
+            var limit = 100;
+            document.write("(" + p.toString() + "," + q.toString() + ")<br>");
+            document.write(x.toString() + "<br>");
+            var i = 0;
+            do {
+                x *= p;
+                document.write(x.toString() + "<br>");
+                x += a;
+                document.write(x.toString() + "<br>");
+                while (x % q == 0) {
+                    x /= q;
+                    document.write(x.toString() + "<br>");
+                }
+                i++;
+            } while (i < limit && x > 1 && x < Infinity)
+            if (i == limit) {
+                document.write("LIMIT<br>");
+            } else if (x == Infinity) {
+                document.write("INFINITY<br>");
+            }
+        }
+
+        function c(p, q) {
+            var a = 1;
+            var x = 1;
+            var limit = 100;
+            var i = 0;
+            var n = 0;
+            var l = [x];
+            do {
+                x *= p;
+                l.push(x);
+                n++;
+                x += a;
+                l.push(x);
+                n++;
+                while (x % q == 0) {
+                    x /= q;
+                    l.push(x);
+                    n++;
+                }
+                i++;
+            } while (i < limit && x > 1 && x < Infinity && l.indexOf(x * p) == -1)
+            if (i == limit) {
+                return "limit";
+            } else if (x == Infinity) {
+                return "infinity"
+            } else if ((l.indexOf(x * p) > -1) && (l.pop() != 1)) {
+                return "c" + l.length.toString();
+            } else {
+                return n.toString();
+            }
+        }
+
+
+        function t1() {
+            var l = 100;
+            document.write("<table>");
+            document.write("<tr>");
+            for (var i = 0; i <= l; i++) {
+                document.write("<td>" + i.toString() + "</td>");
+            }
+            document.write("</tr>");
+            for (i = 1; i <= l; i++) {
+                document.write("<tr>");
+                document.write("<td>" + i.toString() + "</td>");
+                for (j = 1; j <= l; j++) {
+                    var color = 'bgcolor="#FFFFFF"';
+                    var v = false;
+                    if (i == j) {
+                        color = 'bgcolor="#000000"';
+                    } else if ((i > j) && (i % j == 0)) {
+                        color = 'bgcolor="#000000"';
+                    } else if ((j > i) && (j % i == 0)) {
+                        color = 'bgcolor="#000000"';
+                    } else {
+                        var r = c(i, j);
+                        if (r == "infinity") {
+                            color = 'bgcolor="#DDDDDD"';
+                        } else if (r == "limit") {
+                            color = 'bgcolor="#FFFFFF"';
+                        } else if (r[0] == "c") {
+                            color = 'bgcolor="#FF00FF"';
+                            v = true;
+                            r = r.replace("c", "");
+                        } else {
+                            color = 'bgcolor="#00AAFF"';
+                            v = true;
+                        }
+                    }
+                    document.write("<td " + color + ">");
+                    if (v) {
+                        document.write(r);
+                    }
+                    document.write("</td>");
+                }
+                document.write("</tr>");
+            }
+            document.write("</table>");
+        }
+
+        function t2() {
+            var p = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569];
+            var l = p.length;
+            document.write("<table>");
+            document.write("<tr>");
+            document.write("<td></td>");
+            for (var i = 0; i < p.length; i++) {
+                document.write("<td></td>");
+            }
+    //for(var i = 0; i < p.length; i++){document.write("<td>"+p[i].toString()+"</td>");}
+            document.write("</tr>");
+            for (i = 0; i < l; i++) {
+                document.write("<tr>");
+                document.write("<td></td>");
+                //document.write("<td>"+p[i].toString()+"</td>");
+                for (j = 0; j < l; j++) {
+                    var color = 'bgcolor="#FFFFFF"';
+                    var v = false;
+                    if (i == j) {
+                        color = 'bgcolor="#00FF00"';
+                    } else {
+                        var r = c(p[i], p[j]);
+                        if (r == "infinity") {
+                            color = 'bgcolor="#DDDDDD"';
+                        } else if (r == "limit") {
+                            color = 'bgcolor="#FFFFFF"';
+                        } else if (r[0] == "c") {
+                            color = 'bgcolor="#FF00FF"';
+                            v = true;
+                            r = r.replace("c", "");
+                        } else {
+                            color = 'bgcolor="#00AAFF"';
+                            v = true;
+                        }
+                    }
+                    document.write("<td " + color + ">");
+                    //if(v){document.write(r);}
+                    document.write("</td>");
+                }
+                document.write("</tr>");
+            }
+            document.write("</table>");
+        }
+    </script>
+    </head>
+    <body onLoad="t1()">
+    </body>
+</html>

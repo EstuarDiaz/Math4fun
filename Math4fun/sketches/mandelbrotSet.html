@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<title>Mandelbrot Set</title>
+<script>
+var width=height=500;
+var scale = 0.005;
+var iterations = 50;
+var imgData;
+var ctx; 
+var plane; 
+var phi = (Math.sqrt(5)-1)/2;
+var rpos = 100;
+var ipos = 100;
+function start(){
+	var plane = document.getElementById("canvas");
+	plane.width = width;
+	plane.height = height;
+	plane.style="border:1px solid #000000;";
+	ctx = plane.getContext("2d");
+	imgData = ctx.createImageData(width, height); 
+	document.getElementById("xpos").max = 2;
+	document.getElementById("xpos").min = -2;
+	document.getElementById("xpos").step = 0.05;
+	document.getElementById("ypos").max = 2;
+	document.getElementById("ypos").min = -2;
+	document.getElementById("ypos").step = 0.005;
+	document.getElementById("scale").max = 1;
+	document.getElementById("scale").min = 0;
+	document.getElementById("scale").step = 0.005;
+	drawSet();
+}
+
+function map(val,a1,b1,a2,b2){
+	return ((b2-a2)*(val+a1)/(b1-a1))+a2;
+}
+
+function drawSet(){
+	rpos = document.getElementById("xpos").value;	
+	ipos = document.getElementById("ypos").value;
+	scale = -Math.log(document.getElementById("scale").value);
+	iterations = document.getElementById("it").value;
+	var rows = Math.sqrt(imgData.data.length/4);
+	var pos = 0;
+	for(var y = 0; y < rows; y++){
+		for(var x = 0; x < rows; x++){
+			var a = map(x,0,rows,-2,2)*scale-rpos;
+			var b = map(y,0,rows,-2,2)*scale-ipos;
+			var ca = a;
+			var cb = b;
+			for(var i = 0; (i < iterations) && (a*a+b*b < 4); i++){
+				var realPart = a*a-b*b;
+				var imaginaryPart = 2*a*b;
+				a = realPart+ca;
+				b = imaginaryPart+cb;
+			}	
+			pos = (x+rows*y)*4;
+			/*i = map(i,0,iterations,0,255*3);
+			if(i > 255*2){
+				imgData.data[pos] = i-255*2; 
+			}
+			else{
+				imgData.data[pos] = 0; 
+			}
+			if(i < 255*2 && i > 255){
+				imgData.data[pos+1] = i-255; 
+			}
+			else if(i > 255*2){
+				imgData.data[pos+1] = 3*255-i; 
+			}
+			else {
+				imgData.data[pos+1] = 0; 
+			}
+			if(i <= 255){
+				imgData.data[pos+2] = i; 
+			}
+			else{
+				imgData.data[pos+2] = 0; 
+			}*/
+			i = map(i,0,iterations,0,255);
+			imgData.data[pos] = i;
+			imgData.data[pos+1] = i;
+			imgData.data[pos+2] = i;
+			imgData.data[pos+3] = 255;	
+		}
+	}
+	ctx.putImageData(imgData,0,0);
+	document.getElementById("canvas").style.cursor = "crosshair";
+}
+</script>
+<body onLoad="start()">
+<table>
+	<tr>
+		<td>Scale:<input type="range" id="scale" onChange="drawSet()" value="0.1"></td>
+		<td>xPos:<input type="range" id="xpos" onChange="drawSet()" value="0"></td>
+		<td>yPos:<input type="range" id="ypos" onChange="drawSet()" value="0"></td>
+		<td>Iterarions:<input type="text" id="it" value="50" onChange="drawSet()"></td>
+	</tr>
+	<tr><canvas id="canvas" style="cursor:crosshair"></canvas></tr>
+</table>
+</body>
+</html>

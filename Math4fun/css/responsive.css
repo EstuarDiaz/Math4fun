@@ -1,0 +1,160 @@
+body {
+    font-family: "Lato", sans-serif;
+    transition: background-color .5s;
+}
+
+.rotate0 {
+    transform: rotate(-120deg);
+}
+
+.rotate1 {
+    transition: transform .8s;
+    transform: rotate(120deg);
+}
+
+.rotate2 {
+    transition: transform .8s;
+    transform: rotate(-120deg);
+}
+
+.img-circle:hover{
+    /*transform: rotate(-15deg) scale(1.1,1.1);*/
+    transition: transform .2s;
+    transform: scale(1.1,1.1);
+}
+.img-circle:hover >*{
+    /*transform: rotate(15deg);*/
+    transition: transform .5s;
+}
+
+.icon {
+    cursor:pointer;
+}
+
+.social [class*="fa fa-"] {
+    background-color: #82b74b;
+    border-radius: 1.8em;
+    color: #fff;
+    display: inline-block;
+    height: 1.8em;
+    line-height: 1.8em;
+    margin: auto 0.5em;
+    width: 1.8em;
+    font-size: 1.5em;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+.social [class*="fa fa-"]:hover {
+    transform: scale(1.2,1.2);
+    transition: transform .2s;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:visited{
+    text-decoration: none;
+}
+
+a:active{
+    text-decoration: none;
+}
+
+a:hover {
+    transform: scale(1.1,1.1);
+    text-decoration: none;
+}
+
+.sidenav a{
+    text-align: center;
+    padding: 15px 8px 8px 8px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:visited {
+    color: #818181;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+    transform: scale(1.1,1.1);
+}
+
+.sidenav a:active {
+    color: #818181;
+}
+
+.sidenav .closebtn {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.customHr {
+    width: 60%;
+    color: rgba(0, 0, 0, 0);
+    text-align: center;
+    height: 1px;
+    margin: auto;
+    background-color: grey;
+    line-height: 1px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0, 0.9);
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.transpbox{
+    transition: opacity 0.5s;
+    opacity: 0.7;
+    cursor:pointer;
+}
+
+.transpbox:hover{
+    opacity: 0.9;
+    transition: opacity 0.5s;
+}

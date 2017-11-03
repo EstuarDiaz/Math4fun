@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bifurcation Diagram</title>
+<script>
+function draw(canvas,imageData,ctx,ni,ramas,xpos){
+    for(var y = 0; y < canvas.height; y++){
+        for(var x = 0; x < canvas.width; x++){
+            var index = getIndex(x,y,canvas.width);
+            imageData.data[index++] = 0;
+            imageData.data[index++] = 0;
+            imageData.data[index++] = 0;
+            imageData.data[index] = 255;
+        }
+    }
+    for(var x = 10; x < canvas.width-10; x++){
+        var alpha = (x*5/(canvas.width-20))+xpos;
+        var xn = iterate(alpha,0.5,ni);
+        for(var i = 0; i < ramas; i++){
+            xn = b(alpha,xn);
+            index = getIndex(x,Math.round((1-xn)*(canvas.height-50))+10,canvas.width);
+            imageData.data[index++] = 255;
+            imageData.data[index++] = 255;
+            imageData.data[index] = 255;
+        }
+    }
+    ctx.putImageData(imageData,0,0);
+}
+
+function animateAtractor(n,t,canvas,ctx,imageData,ni,ramas,xpos){
+    setTimeout(function(){  
+        draw(canvas,imageData,ctx,ni,ramas,xpos);
+        if(ni < n){
+            ni += Math.exp(Math.sqrt(ni)-3);
+            document.getElementById("a").value = ni;
+            animateAtractor(n,t,canvas,ctx,imageData,ni,ramas,xpos);
+        }
+    }, t);
+}
+
+function myLoad(){
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    var index = 0;
+    var origen = [0,0,0];
+    var ni = 0;
+    var ramas = 50;
+    var xpos = document.getElementById("alpha").value;
+    animateAtractor(500,10,canvas,ctx,imageData,ni,ramas,0);
+//    draw(canvas,imageData,ctx,ni,ramas,0);
+}
+
+function getIndex(x,y,w){
+    return (y*w + x)*4;
+}
+
+function b(alpha,x){
+    return alpha*x*(1-x);
+}
+
+function iterate(alpha,x,n){
+    var xn = x;
+    for(var i = 0; i < n; i++){
+        xn = b(alpha,xn);
+    }   
+    return xn;
+}
+</script>
+</head>
+<body onload="myLoad()">
+<h1>Bifurcation Diagram </h1>
+Valor: <input type="text" name="value1"><input type="button" value="Aceptar" onclick="myLoad()">
+<output name="a" id = "a"></output>
+<br/>
+-2<input type="range" id="alpha" value="0" min="-1" max="1" step="0.25">2  -2<input type="range" id="num" value="150" min="0" max="2">2
+<br/><br/>
+<canvas id="myCanvas" width="1200" height="600" style="border:1px solid #000000;">
+</canvas>
+</body>
+</html>

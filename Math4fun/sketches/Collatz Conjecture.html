@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Collatz Conjevture</title>
+<script>
+var origen = [0,0];
+var escala = 1;
+var paso = 0.5;
+
+function myLoad(){
+    origen = [330,553];
+    escala = document.getElementById("scale").value;
+    draw();
+}
+
+function collatz(){
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    drawFunction(ctx,canvas,f,1,"#F0F0F0");
+    drawFunction(ctx,canvas,g,1,"#FF00FF");
+    drawFunction(ctx,canvas,h,1,"#FFFF00");
+//    drawFunction(ctx,canvas,l,1,"#FF0000");
+    drawFunction(ctx,canvas,k,1,"white");
+}
+
+function drawFunction(ctx,canvas,f,width,color){
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.moveTo(-origen[0],origen[1]);
+    for(var x = -origen[0]; x < canvas.width-origen[0]; x+= paso){
+        var y = f(x/escala)*escala;
+        ctx.lineTo(x+origen[0],origen[1]-y);
+    }
+    ctx.strokeStyle = color;
+    ctx.stroke();
+}
+
+function f(x){return 1.75*x + 0.5 - Math.cos(x*Math.PI)*(1.25*x+0.5);}
+function g(x){return 3*x + 1;}
+function h(x){return 0.5*x;}
+function l(x){return 7/4 +Math.PI*Math.sin(Math.PI*x)*(5/4*x+1/2)-5/4*Math.cos(Math.PI*x);}
+function k(x){return x;}
+    /*return Math.sin((x+0.5)*Math.PI)*(x+2)-2+x;*/
+
+function escalar(value){
+    escala = value;
+    draw();
+}
+
+function draw(){
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ejes(ctx,origen,canvas,escala);
+    collatz();
+}
+
+function move(event){
+    var x = event.which || event.keyCode;
+    var a = 5;
+    if(x === 119){origen[1] += a; draw();}
+    else if(x === 120){origen[1] -= a; draw();}
+    else if(x === 97){ origen[0] += a; draw();}
+    else if(x === 100){origen[0] -= a; draw();}
+    else if(x === 113){origen[1] += a; origen[0] += a; draw();}
+    else if(x === 101){origen[1] += a; origen[0] -= a; draw();}
+    else if(x === 122){origen[0] += a; origen[1] -= a; draw();}
+    else if(x === 99){origen[0] -= a; origen[1] -= a; draw();}
+    else if(x === 115){if(escala > 1){escala -= Math.log(10*escala); document.getElementById("scale").value = escala; draw();}}
+    else if(x === 114){if(escala < 1000){escala += Math.log(10*escala); document.getElementById("scale").value = escala; draw();}}
+    document.getElementById("xpos").value = origen[0];
+    document.getElementById("ypos").value = origen[1];
+}
+
+function ejes(ctx,origen,canvas,escala){
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle="#00FFFF";
+    ctx.lineWidth = "0.4";
+    for(var i = -Math.round(origen[1]/(escala*10))-1; i < Math.round((canvas.height-origen[1])/(escala*10))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(0,origen[1]+i*escala*10);
+        ctx.lineTo(canvas.width,origen[1]+i*escala*10);
+        ctx.stroke();
+    }
+    for(var i = -Math.round(origen[0]/(escala*10))-1; i < Math.round((canvas.width-origen[0])/(escala*10))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(origen[0]+i*escala*10,0);
+        ctx.lineTo(origen[0]+i*escala*10,canvas.height);
+        ctx.stroke();
+    }
+    for(var i = -Math.round(origen[1]/(escala))-1; i < Math.round((canvas.height-origen[1])/(escala))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(0,origen[1]+i*escala);
+        ctx.lineTo(canvas.width,origen[1]+i*escala);
+        ctx.stroke();
+    }
+    for(var i = -Math.round(origen[0]/(escala))-1; i < Math.round((canvas.width-origen[0])/(escala))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(origen[0]+i*escala,0);
+        ctx.lineTo(origen[0]+i*escala,canvas.height);
+        ctx.stroke();
+    }
+    ctx.strokeStyle="white";
+    ctx.lineWidth = "2";
+    ctx.beginPath();
+    ctx.moveTo(0,origen[1]);
+    ctx.lineTo(canvas.width,origen[1]);
+    ctx.stroke();
+    ctx.moveTo(origen[0],0);
+    ctx.lineTo(origen[0],canvas.height);
+    ctx.stroke();
+    for(var i = -Math.round(origen[1]/(escala*10))-1; i < Math.round((canvas.height-origen[1])/(escala*10))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(origen[0]-5*escala,origen[1]+i*escala*10);
+        ctx.lineTo(origen[0]+5*escala,origen[1]+i*escala*10);
+        ctx.stroke();
+    }
+    for(var i = -Math.round(origen[0]/(escala*10))-1; i < Math.round((canvas.width-origen[0])/(escala*10))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(origen[0]+i*escala*10,origen[1]-5*escala);
+        ctx.lineTo(origen[0]+i*escala*10,origen[1]+5*escala);
+        ctx.stroke();
+    }
+    for(var i = -Math.round(origen[1]/(escala))-1; i < Math.round((canvas.height-origen[1])/(escala))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(origen[0]-1*escala,origen[1]+i*escala);
+        ctx.lineTo(origen[0]+1*escala,origen[1]+i*escala);
+        ctx.stroke();
+    }
+    for(var i = -Math.round(origen[0]/(escala))-1; i < Math.round((canvas.width-origen[0])/(escala  ))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(origen[0]+i*escala,origen[1]-1*escala);
+        ctx.lineTo(origen[0]+i*escala,origen[1]+1*escala);
+        ctx.stroke();
+    }
+}
+
+function number(v,limit){
+    setTimeout(function(){
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+//        var n = document.getElementById("num").value;
+        var a = 0;
+        var n = v;
+        draw();
+        ctx.strokeStyle="red";
+        ctx.lineWidth = "2";
+        while(n > 1 && a < 1000){
+            a++;
+            ctx.beginPath();
+            ctx.moveTo(n*escala+origen[0],-n*escala+origen[1]);
+            ctx.lineTo(n*escala+origen[0],-f(n)*escala+origen[1]);
+            n = f(n);
+            ctx.lineTo(n*escala+origen[0],-n*escala+origen[1]);
+            ctx.stroke();    
+        }
+        if(v < limit){
+            v += 0.00001;
+            number(v,limit);
+        }
+    },10);
+}
+</script>
+</head>
+<body onload="myLoad()" onkeypress="move(event)">
+<h1>Collatz Conjecture</h1>
+<input value="1" id="num"><input type="button" value="Aceptar" onclick="number(2.1,2.11)"><br/>
+1<input type="range" id="scale" value="10" min="1" max="1000" step="10" onchange="escalar(value)">10000 
+Xpos:<output id = "xpos">0</output>
+Ypos:<output id = "ypos">0</output>
+<br/><br/>
+<canvas id="myCanvas" width="1200" height="600" style="border:1px solid #000000;">
+</canvas>
+</body>
+</html>

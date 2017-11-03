@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<title>FractalPlant</title>
+<script>
+function draw(){
+	var c = document.getElementById("canvas");
+	var ctx = c.getContext("2d");
+	ctx.fillRect(20,20,150,100);
+	plant = getData();
+	alert(plant);
+}
+function getData(){
+	var plant = [];
+	var data = document.getElementById("data").value.substr(0,document.getElementById("data").value.length-1);
+	var a1 = data.split("|");
+	a1.foreach(item,index){
+		var a2 = item.split(":");
+		var leaf = [];
+		var a3 = a2[1].split(";");
+		a3.foreach(item,index){
+			leaf[index] = item.split(",");
+		}
+		plant[index] = array(a2[0].split(","),leaf);
+	}
+	return plant; 
+}
+</script>
+<body>
+<table>
+	<tr><td>
+		<textarea id="data" rows="4" cols="50"></textarea>
+		<input type="button" name="draw" onClick="draw()" value="Draw"></input>
+	</tr></td>
+	<tr><td>
+		<canvas id="canvas" style="cursor:crosshair" width="500" height="500">
+	</tr></td>
+</table>
+</body>
+</html>

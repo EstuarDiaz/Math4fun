@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Collatz Conjevture</title>
+<script>
+var origen = [0,0];
+var escala = 1;
+var paso = 0.01;
+
+function myLoad(){
+    var canvas = document.getElementById("myCanvas");
+    origen = [330,553];
+    escala = document.getElementById("scale").value;
+    draw();
+}
+
+function collatz(){
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+    for(var x = -origen[0]; x < canvas.width-origen[0]; x+= paso){
+        var index = getIndex(x/escala,f(x/escala),canvas.width);
+        imageData.data[index++] = 255;
+        imageData.data[index++] = 255;
+        imageData.data[index++] = 200;
+        var index = getIndex(x/escala,g(x/escala),canvas.width);
+        imageData.data[index++] = 255;
+        imageData.data[index++] = 0;
+        imageData.data[index++] = 255;
+        var index = getIndex(x/escala,h(x/escala),canvas.width);
+        imageData.data[index++] = 100;
+        imageData.data[index++] = 255;
+        imageData.data[index++] = 100;
+        var index = getIndex(x/escala,l(x/escala),canvas.width);
+        imageData.data[index++] = 255;
+        imageData.data[index++] = 255;
+        imageData.data[index++] = 255;
+    }
+    ctx.putImageData(imageData,0,0);
+}
+
+function f(x){
+    return 1.75*x + 0.5 - Math.cos(x*Math.PI)*(1.25*x+0.5);
+}
+
+function g(x){
+    return 3*x + 1;
+}
+
+function h(x){
+    return 0.5*x;
+}
+
+function l(x){
+    return x;
+//    return Math.sin((x+0.5)*Math.PI)*(x+2)-2+x;
+}
+
+function getIndex(x,y,w){
+    y = Math.round(-y*escala + origen[1]);
+    x = Math.round(x*escala + origen[0]);
+    return (y*w + x)*4;
+}
+
+function escalar(value){
+    escala = value;
+    draw();
+}
+
+function draw(){
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ejes(ctx,origen,canvas,escala);
+    collatz();
+}
+
+function move(event){
+    var x = event.which || event.keyCode;
+    var a = 2;
+    if(x === 119){origen[1] += a*escala; draw();}
+    else if(x === 120){origen[1] -= a*escala; draw();}
+    else if(x === 97){ origen[0] += a*escala; draw();}
+    else if(x === 100){origen[0] -= a*escala; draw();}
+    else if(x === 113){origen[1] += a*escala; origen[0] += a*escala; draw();}
+    else if(x === 101){origen[1] += a*escala; origen[0] -= a*escala; draw();}
+    else if(x === 122){origen[0] += a*escala; origen[1] -= a*escala; draw();}
+    else if(x === 99){origen[0] -= a*escala; origen[1] -= a*escala; draw();}
+    else if(x === 115){if(escala > 0.25){escala -= 0.25; document.getElementById("scale").value = escala; draw();}}
+    else if(x === 114){if(escala < 15){escala += 0.25; document.getElementById("scale").value = escala; draw();}}
+    document.getElementById("xpos").value = origen[0];
+    document.getElementById("ypos").value = origen[1];
+}
+
+function ejes(ctx,origen,canvas,escala){
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.strokeStyle="#00FFFF";
+    ctx.lineWidth = "0.4";
+    for(var i = -Math.round(origen[1]/(escala*10))-1; i < Math.round((canvas.height-origen[1])/(escala*10))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(0,origen[1]+i*escala*10);
+        ctx.lineTo(canvas.width,origen[1]+i*escala*10);
+        ctx.stroke();
+    }
+    for(var i = -Math.round(origen[0]/(escala*10))-1; i < Math.round((canvas.width-origen[0])/(escala*10))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(origen[0]+i*escala*10,0);
+        ctx.lineTo(origen[0]+i*escala*10,canvas.height);
+        ctx.stroke();
+    }
+    ctx.strokeStyle="white";
+    ctx.lineWidth = "2";
+    ctx.beginPath();
+    ctx.moveTo(0,origen[1]);
+    ctx.lineTo(canvas.width,origen[1]);
+    ctx.stroke();
+    ctx.moveTo(origen[0],0);
+    ctx.lineTo(origen[0],canvas.height);
+    ctx.stroke();
+    for(var i = -Math.round(origen[1]/(escala*10))-1; i < Math.round((canvas.height-origen[1])/(escala*10))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(origen[0]-5*escala,origen[1]+i*escala*10);
+        ctx.lineTo(origen[0]+5*escala,origen[1]+i*escala*10);
+        ctx.stroke();
+    }
+    for(var i = -Math.round(origen[0]/(escala*10))-1; i < Math.round((canvas.width-origen[0])/(escala*10))+1; i++){
+        ctx.beginPath();
+        ctx.moveTo(origen[0]+i*escala*10,origen[1]-5*escala);
+        ctx.lineTo(origen[0]+i*escala*10,origen[1]+5*escala);
+        ctx.stroke();
+    }
+}
+
+function number(v,limit){
+    setTimeout(function(){
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+//        var n = document.getElementById("num").value;
+        var a = 0;
+        var n = v;
+        draw();
+        ctx.strokeStyle="red";
+        while(n > 1 && a < 1000){
+            a++;
+            ctx.beginPath();
+            ctx.moveTo(n*escala+origen[0],-n*escala+origen[1]);
+            ctx.lineTo(n*escala+origen[0],-f(n)*escala+origen[1]);
+            n = f(n);
+            ctx.lineTo(n*escala+origen[0],-n*escala+origen[1]);
+            ctx.stroke();    
+        }
+        if(v < limit){
+            v += 0.00001;
+            number(v,limit);
+        }
+    },10);
+}
+</script>
+</head>
+<body onload="myLoad()" onkeypress="move(event)">
+<h1>Collatz Conjecture</h1>
+<input value="1" id="num"><input type="button" value="Aceptar" onclick="number(2.1,2.11)"><br/>
+0.25<input type="range" id="scale" value="10" min="0.25" max="15" step="0.25" onchange="escalar(value)">15 
+Xpos:<output id = "xpos">0</output>
+Ypos:<output id = "ypos">0</output>
+<br/><br/>
+<canvas id="myCanvas" width="1200" height="600" style="border:1px solid #000000;">
+</canvas>
+</body>
+</html>

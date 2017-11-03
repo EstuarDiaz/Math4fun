@@ -1,0 +1,59 @@
+.info {
+    grid-area: info;
+}
+
+.recomended {
+    grid-area: recomended;
+}
+
+.content {
+    grid-area: content;
+}
+
+.header {
+    grid-area: header;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+.wrapper {
+    background-color: #ffffff;
+    display: grid;
+    grid-gap: 1em;
+    grid-template-areas:
+        "header"
+        "info"
+        "content"
+        "recomended"
+        "footer"
+}
+
+@media only screen and (min-width: 800px)  {
+    .wrapper {
+        grid-template-columns: 35% auto;
+        grid-template-rows: 30px 1fr;
+        grid-template-areas:
+            "header   header"
+            "info  content"
+            "recomended recomended"
+            "footer   footer";
+    }
+}
+
+.box {
+}
+
+/*
+
+Colors:
+(Blue)
+1. #7092be
+2. #99d9ea
+3. #3f48cc
+(green)
+1. #b5e61d
+2. #22b14c
+
+*/
