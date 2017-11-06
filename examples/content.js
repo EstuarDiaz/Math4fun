@@ -74,12 +74,31 @@ function addInspiration(img,text){
 }
 
 function addVideos(videos){
-    $('#myVideos').append($('<h1/>',{'id':'vidTitle','class':'title'}).text('Related videos: '));
-    videos.forEach(function(item){
-      $("#myVideos").append(
-        $('<iframe class="video" src="https://www.youtube.com/embed/'+item+'" frameborder="0" allowfullscreen></iframe>')
+    // $('#myVideos').append($('<h1/>',{'id':'vidTitle','class':'title'}).text('Related videos: '));
+    // videos.forEach(function(item){
+    //   $("#myVideos").append(
+    //     $('<iframe class="video" src="https://www.youtube.com/embed/'+item+'" frameborder="0" allowfullscreen></iframe>')
+    //   );
+    // });
+
+    $('#myVideos').append($('<div id="videosContainer" class="slideshow-container">'+
+                            '<a class="prev" onclick="plusSlides(-1)">&#10094;</a>'+
+                            '<a class="next" onclick="plusSlides(1)">&#10095;</a></div>'));
+    for(var i = 1; i <= videos.length; i++){
+      $("#videosContainer").append(
+        $('<div class="mySlides fade">'+
+          '<div class="numbertext">'+i+' / '+videos.length+'</div>'+
+          '<img src="https://img.youtube.com/vi/'+videos[i-1]+'/0.jpg" style="width:100%">'+
+          '<div class="text">Caption Text</div>'+
+        '</div>')
       );
-    });
+    }
+    $('#myVideos').append($('<div id="videosDots" style="text-align:center"></div><br>'));
+    for(var i = 1; i <= videos.length; i++){
+      $("#videosDots").append(
+        $('<span class="dot" onclick="currentSlide('+i+')"></span>')
+      );
+    }
 }
 
 function addInfo(text){
