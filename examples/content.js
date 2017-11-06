@@ -84,6 +84,7 @@ function addVideos(videos){
     $('#myVideos').append($('<div id="videosContainer" class="slideshow-container">'+
                             '<a class="prev" onclick="plusSlides(-1)">&#10094;</a>'+
                             '<a class="next" onclick="plusSlides(1)">&#10095;</a></div>'));
+    alert(0);
     for(var i = 1; i <= videos.length; i++){
       $("#videosContainer").append(
         $('<div class="mySlides fade">'+
@@ -93,12 +94,42 @@ function addVideos(videos){
         '</div>')
       );
     }
+    alert(1);
     $('#myVideos').append($('<div id="videosDots" style="text-align:center"></div><br>'));
     for(var i = 1; i <= videos.length; i++){
       $("#videosDots").append(
         $('<span class="dot" onclick="currentSlide('+i+')"></span>')
       );
     }
+    alert(2);
+    /*From w3schools*/
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " active";
+    }
+    /*----*/
 }
 
 function addInfo(text){
