@@ -157,16 +157,16 @@ function addInterface(){
     blocks.forEach(function(item,index){
           $("#interface").append($('<div class="box '+item+'" id="'+item+'"></div>'));
     });
-    $("#info").click(function(){
-        loadStart();
-        myClear();
-        selectSketch(1);
-    });
-    $("#myVideos").click(function(){
-        loadStart();
-        myClear();
-        selectSketch(2);
-    });
+    // $("#info").click(function(){
+    //     loadStart();
+    //     myClear();
+    //     selectSketch(1);
+    // });
+    // $("#myVideos").click(function(){
+    //     loadStart();
+    //     myClear();
+    //     selectSketch(2);
+    // });
 }
 
 function openNav() {
