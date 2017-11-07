@@ -117,6 +117,7 @@ function showSlides(n) {
   var i;
   var slides = $('#videosContainer').find('.mySlides');
   var dots = $('#videosDots').find('.dot');
+  alert(slides);
   if (n > slides.length) {slideIndex = 1}
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
