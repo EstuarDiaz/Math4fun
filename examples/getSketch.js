@@ -21,11 +21,11 @@ function getSketch(title,filename,img,quote){
     // addVideo('https://www.youtube.com/embed/CJHGDCb6vnY');
     $('head').append($('<link id="'+filename+'" rel="stylesheet" href="'+filename+'.css" type="text/css" />'));
     $.getScript(filename+'.js',function(){
-      mySet(function(){
+      // mySet(function(){
         setTimeout(function(){
           start(loadEnd);
         }, 500);
-      });
+      // });
     });
 }
 
