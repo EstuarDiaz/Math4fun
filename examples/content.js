@@ -83,7 +83,7 @@ function addVideos(videos){
 
     $('#myVideos').append($('<div id="videosContainer" class="slideshow-container">'+
                             '<a class="prev" onclick="plusSlides(-1)">&#10094;</a>'+
-                            '<a class="next" onclick="plusSlides(1)">&#10095;</a></div>'));
+                            '<a class="next" onclick="plusSlides(1)">&#10095;</a></div><br>'));
     for(var i = 1; i <= videos.length; i++){
       $("#videosContainer").append(
         $('<div class="mySlides fade">'+
@@ -93,7 +93,7 @@ function addVideos(videos){
         '</div>')
       );
     }
-    $('#myVideos').append($('<div id="videosDots" style="text-align:center"></div><br>'));
+    $('#myVideos').append($('<div id="videosDots" style="text-align:center"></div>'));
     for(var i = 1; i <= videos.length; i++){
       $("#videosDots").append(
         $('<span class="dot" onclick="currentSlide('+i+')"></span>')
