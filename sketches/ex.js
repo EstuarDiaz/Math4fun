@@ -88,8 +88,8 @@ function f2(u) {
 function f3(u) {
     var v = [];
     var w = f11(u);
-    v[0] = u[0] + (w[0]-u[0])*t;
-    v[1] = u[1] + (w[1]-u[1])*t;
+    v[0] = u[0] - (w[0]-u[0])*t;
+    v[1] = u[1] - (w[1]-u[1])*t;
     return v;
 }
 
