@@ -13,20 +13,6 @@ function tryCall(callback){
     }
 }
 
-function mySet(callback){
-    $("#mycontent")
-        .append($('<div/>',{'id':'container','class':'container box'})
-          .append($('<canvas/>',{'id':'canvas'}))
-        )
-        .append($('<div/>',{'id':'process','class': 'process box'})
-          .append('Scale:<input type="range" id="scale" onChange="drawSet()" value="0.1">')
-          .append('xPos:<input type="range" id="xpos" onChange="drawSet()" value="0">')
-          .append('yPos:<input type="range" id="ypos" onChange="drawSet()" value="0">')
-          .append('Iterarions:<input type="text" id="it" value="50" onChange="drawSet()">')
-        )
-    tryCall(callback);
-}
-
 /*
 function mySet(callback){
     $('#mycontent')

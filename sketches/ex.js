@@ -13,7 +13,7 @@ function setup() {
     drawBG();
     drawAxis();
     drawCross();
-    
+
     for(var i = -c; i < c; i+=0.8){
         for(var j = -c; j < c; j+=0.8){
 //            var x = Math.random()*2*c-c;
@@ -27,7 +27,7 @@ function setup() {
         }
     }
 }
-    
+
 function draw() {
     if(play){
         drawBG();
@@ -88,8 +88,8 @@ function f2(u) {
 function f3(u) {
     var v = [];
     var w = f11(u);
-    v[0] = u[0] + (w[0]-u[0])*t;
-    v[1] = u[1] + (w[1]-u[1])*t;
+    v[0] = u[0] - (w[0]-u[0])*t;
+    v[1] = u[1] - (w[1]-u[1])*t;
     return v;
 }
 
@@ -162,8 +162,8 @@ function drawCross(){
 }
 
 function drawAxis(){
-    stroke(255); 
-    strokeWeight(1); 
+    stroke(255);
+    strokeWeight(1);
     line(width / 2, 0, width / 2, height);
     line(0, height / 2, width, height / 2);
     var a = c;
@@ -175,8 +175,8 @@ function drawAxis(){
 }
 
 function drawBG(){
-    background(0);  
-    strokeWeight(1); 
+    background(0);
+    strokeWeight(1);
     line(width / 2, 0, width / 2, height);
     line(0, height / 2, width, height / 2);
     var a = c;
