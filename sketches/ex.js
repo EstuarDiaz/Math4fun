@@ -59,7 +59,7 @@ function draw() {
 //            line(q[0],q[1],w[0],w[1]);
         });
         puntos2.forEach(function(item,index){
-            var q = f3([item[0],item[1]]);
+            var q = f3b([item[0],item[1]]);
             var w = t2([item[0],item[1]]);
             stroke(255*(index/(4*c*c)),0,255);
             item[0] = q[0];
@@ -111,11 +111,19 @@ function f2(u) {
 function f3(u) {
     var v = [];
     var w = f11(u);
+    v[0] = u[0] + (w[0]-u[0])*t;
+    v[1] = u[1] + (w[1]-u[1])*t;
+    return v;
+}
+
+// f3: R -> R
+function f3b(u) {
+    var v = [];
+    var w = f11(u);
     v[0] = u[0] - (w[0]-u[0])*t;
     v[1] = u[1] - (w[1]-u[1])*t;
     return v;
 }
-
 // f2: R -> R
 function f5(u) {
     var v = [];
