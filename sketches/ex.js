@@ -110,7 +110,7 @@ function f2(u) {
 // f3: R -> R
 function f3(u) {
     var v = [];
-    var w = f11(u);
+    var w = f4(u);
     v[0] = u[0] + (w[0]-u[0])*t;
     v[1] = u[1] + (w[1]-u[1])*t;
     return v;
@@ -119,7 +119,7 @@ function f3(u) {
 // f3: R -> R
 function f3b(u) {
     var v = [];
-    var w = f11(u);
+    var w = f4(u);
     v[0] = u[0] - (w[0]-u[0])*t;
     v[1] = u[1] - (w[1]-u[1])*t;
     return v;
