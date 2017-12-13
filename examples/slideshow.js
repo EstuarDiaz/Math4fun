@@ -1,9 +1,10 @@
 $(function(){
-  var slideIndex = 1;
-  showSlides(slideIndex);
+
   var slideInfo = [{text:"HOLA1",imgSource:"../imgs/mandelbrotview.png"},
                   {text:"HOLA2",imgSource:"../imgs/bg1.jpg"}];
   addSlideShow("body","slideShow",slideInfo);
+  var slideIndex = 1;
+  showSlides(slideIndex);
 });
 
 function addSlideShow(parentId,id,slideInfo){
@@ -17,7 +18,7 @@ function addSlideShow(parentId,id,slideInfo){
   alert(a++);
   addSlidesDots(id,slideInfo.length);
   alert(a++);
-  showSlides(2);
+  showSlides(1);
   alert(a++);
 }
 
