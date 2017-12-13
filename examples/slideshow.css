@@ -5,6 +5,7 @@ body {font-family: Verdana,sans-serif;margin:0}
 /* Slideshow container */
 .slideshow-container {
   max-width: 1000px;
+  max-heigth: 50px;
   position: relative;
   margin: auto;
 }
