@@ -6,6 +6,7 @@ var n = 1;
 var p = {x:-5,y:5};
 var t = 0.05;
 var puntos = [];
+var puntos2 = [];
 var play = false;
 
 function setup() {
@@ -26,6 +27,18 @@ function setup() {
             point(q[0],q[1]);
         }
     }
+    for(var i = -c; i < c; i+=0.8){
+        for(var j = -c; j < c; j+=0.8){
+//            var x = Math.random()*2*c-c;
+//            var y = Math.random()*2*c-c;
+            var x = i;
+            var y = j;
+            puntos2.push([x,y]);
+            var q = t2([x,y]);
+            stroke(255*(puntos2.length/(4*c*c)),0,255);
+            point(q[0],q[1]);
+        }
+    }
 }
 
 function draw() {
@@ -39,6 +52,16 @@ function draw() {
             var q = f3([item[0],item[1]]);
             var w = t2([item[0],item[1]]);
             stroke(0,255,255*(index/(4*c*c)));
+            item[0] = q[0];
+            item[1] = q[1];
+            q = t2(q);
+            point(q[0],q[1]);
+//            line(q[0],q[1],w[0],w[1]);
+        });
+        puntos2.forEach(function(item,index){
+            var q = f3b([item[0],item[1]]);
+            var w = t2([item[0],item[1]]);
+            stroke(255*(index/(4*c*c)),0,255);
             item[0] = q[0];
             item[1] = q[1];
             q = t2(q);
@@ -93,6 +116,14 @@ function f3(u) {
     return v;
 }
 
+// f3: R -> R
+function f3b(u) {
+    var v = [];
+    var w = f11(u);
+    v[0] = u[0] - (w[0]-u[0])*t;
+    v[1] = u[1] - (w[1]-u[1])*t;
+    return v;
+}
 // f2: R -> R
 function f5(u) {
     var v = [];

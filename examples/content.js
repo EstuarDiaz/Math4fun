@@ -74,13 +74,62 @@ function addInspiration(img,text){
 }
 
 function addVideos(videos){
-    $('#myVideos').append($('<h1/>',{'id':'vidTitle','class':'title'}).text('Related videos: '));
-    videos.forEach(function(item){
-      $("#myVideos").append(
-        $('<iframe class="video" src="https://www.youtube.com/embed/'+item+'" frameborder="0" allowfullscreen></iframe>')
+    // $('#myVideos').append($('<h1/>',{'id':'vidTitle','class':'title'}).text('Related videos: '));
+    // videos.forEach(function(item){
+    //   $("#myVideos").append(
+    //     $('<iframe class="video" src="https://www.youtube.com/embed/'+item+'" frameborder="0" allowfullscreen></iframe>')
+    //   );
+    // });
+
+    $('#myVideos').append($('<div id="videosContainer" class="slideshow-container">'));
+    for(var i = 1; i <= videos.length; i++){
+      $("#videosContainer").append(
+        $('<div class="mySlides fade">'+
+          '<div class="numbertext">'+i+' / '+videos.length+'</div>'+
+          '<img src="https://img.youtube.com/vi/'+videos[i-1]+'/0.jpg" style="width:100%">'+
+          '<div class="text">Caption Text</div>'+
+        '</div>')
       );
-    });
+    }
+    $("#videosContainer").append($('<a class="prev" onclick="plusSlides(-1)">&#10094;</a>'+
+                              '<a class="next" onclick="plusSlides(1)">&#10095;</a></div><br>'));
+    $('#myVideos').append($('<div id="videosDots" style="text-align:center"></div>'));
+    for(var i = 1; i <= videos.length; i++){
+      $("#videosDots").append(
+        $('<span class="dot" onclick="currentSlide('+i+')"></span>')
+      );
+    }
 }
+
+/*From w3schools*/
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = $('#videosContainer').find('.mySlides');
+  var dots = $('#videosDots').find('.dot');
+  alert(slides);
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+/*----*/
 
 function addInfo(text){
     $('#info').append($('<h1/>',{'id':'infoTitle','class':'title'}).text('Info'));
@@ -107,16 +156,16 @@ function addInterface(){
     blocks.forEach(function(item,index){
           $("#interface").append($('<div class="box '+item+'" id="'+item+'"></div>'));
     });
-    $("#info").click(function(){
-        loadStart();
-        myClear();
-        selectSketch(1);
-    });
-    $("#myVideos").click(function(){
-        loadStart();
-        myClear();
-        selectSketch(2);
-    });
+    // $("#info").click(function(){
+    //     loadStart();
+    //     myClear();
+    //     selectSketch(1);
+    // });
+    // $("#myVideos").click(function(){
+    //     loadStart();
+    //     myClear();
+    //     selectSketch(2);
+    // });
 }
 
 function openNav() {
