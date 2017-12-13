@@ -1,23 +1,16 @@
+var slideIndex = 1;
 $(function(){
-
   var slideInfo = [{text:"HOLA1",imgSource:"../imgs/mandelbrotview.png"},
                   {text:"HOLA2",imgSource:"../imgs/bg1.jpg"}];
   addSlideShow("body","slideShow",slideInfo);
-  var slideIndex = 1;
   showSlides(slideIndex);
 });
 
 function addSlideShow(parentId,id,slideInfo){
-  var a = 0;
-  alert(a++);
   addContainer(parentId,id,id,"slideshow-container");
-  alert(a++);
   addSlides(id,slideInfo);
-  alert(a++);
   addSlidesButtons(id);
-  alert(a++);
   addSlidesDots(id,slideInfo.length);
-  alert(a++);
 }
 
 function addContainer(parentId,id,name,classname){
