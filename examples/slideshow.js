@@ -35,7 +35,7 @@ function addSlides(parentId,slideInfo){
     $("#"+parentId).append($('<div class="mySlides fade">'
                             +'<div class="numbertext">'+i+' / '+slideInfo.length+'</div>'
                             +'<img src="'+slideInfo[i].imgSource+'" style="width:100%">'
-                            +'<div class="text">'slideInfo[i].text'</div>'
+                            +'<div class="text">'+slideInfo[i].text+'</div>'
                           +'</div>'));
   }
 }
