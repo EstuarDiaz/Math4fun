@@ -18,8 +18,6 @@ function addSlideShow(parentId,id,slideInfo){
   alert(a++);
   addSlidesDots(id,slideInfo.length);
   alert(a++);
-  showSlides(1);
-  alert(a++);
 }
 
 function addContainer(parentId,id,name,classname){
