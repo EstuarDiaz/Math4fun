@@ -25,10 +25,13 @@ function addSlides(parentId,slideInfo){
   for(var i = 0; i < slideInfo.length; i++){
     $("#"+parentId).append($('<div class="mySlides fade">'
                             +'<div class="numbertext">'+(i+1)+' / '+slideInfo.length+'</div>'
-                            +'<img src="'+slideInfo[i].imgSource+'" style="width:100%">'
+                            +'<img src="'+slideInfo[i].imgSource+'" style="width:100%" class="thumbnail">'
                             +'<div class="text">'+slideInfo[i].text+'</div>'
                           +'</div>'));
   }
+  $('img.thumbnail').click(function() {
+      window.location.href = this.id + '.html';
+  });
 }
 
 function addSlidesButtons(parentId){
