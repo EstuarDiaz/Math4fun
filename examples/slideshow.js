@@ -31,9 +31,9 @@ parentId: (String) the id of the parent conainer to append the slides
 slideInfo: (Array of Object{text,imgSource}) contains the data to put in the slider
 */
 function addSlides(parentId,slideInfo){
-  for(var i = 1; i <= slideInfo.length; i++){
+  for(var i = 0; i < slideInfo.length; i++){
     $("#"+parentId).append($('<div class="mySlides fade">'
-                            +'<div class="numbertext">'+i+' / '+slideInfo.length+'</div>'
+                            +'<div class="numbertext">'+(i+1)+' / '+slideInfo.length+'</div>'
                             +'<img src="'+slideInfo[i].imgSource+'" style="width:100%">'
                             +'<div class="text">'+slideInfo[i].text+'</div>'
                           +'</div>'));
