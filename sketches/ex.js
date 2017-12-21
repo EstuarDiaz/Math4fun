@@ -2,7 +2,7 @@
 /*Estuardo Diaz (2017-07-27)*/
 
 var c = 30;
-var n = 1;
+var n = 5;
 var p = {x:-5,y:5};
 var t = 0.05;
 var puntos = [];
@@ -27,6 +27,7 @@ function setup() {
             point(q[0],q[1]);
         }
     }
+    /*
     for(var i = -c; i < c; i+=0.8){
         for(var j = -c; j < c; j+=0.8){
 //            var x = Math.random()*2*c-c;
@@ -39,6 +40,7 @@ function setup() {
             point(q[0],q[1]);
         }
     }
+    */
 }
 
 function draw() {
@@ -47,7 +49,7 @@ function draw() {
 //        drawBGlines();
         drawAxis();
         drawCross();
-//        followMe();
+        followMe();
         puntos.forEach(function(item,index){
             var q = f3([item[0],item[1]]);
             var w = t2([item[0],item[1]]);
@@ -58,6 +60,7 @@ function draw() {
             point(q[0],q[1]);
 //            line(q[0],q[1],w[0],w[1]);
         });
+        /*
         puntos2.forEach(function(item,index){
             var q = f3b([item[0],item[1]]);
             var w = t2([item[0],item[1]]);
@@ -68,6 +71,7 @@ function draw() {
             point(q[0],q[1]);
 //            line(q[0],q[1],w[0],w[1]);
         });
+        */
     }
 }
 
@@ -76,6 +80,7 @@ function mousePressed() {
 }
 
 // f1: R -> R
+// Exp(z)
 function f1(u) {
     var v = [];
     v[0] = Math.exp(u[0]) * Math.cos(u[1]);
@@ -84,6 +89,7 @@ function f1(u) {
 }
 
 // f1: R -> R
+// exp(i*z)
 function f11(u) {
     var v = [];
     v[0] = Math.exp(-u[1]) * Math.cos(u[0]);
@@ -92,11 +98,16 @@ function f11(u) {
 }
 
 // f4: R -> R
+// x^2
 function f4(u) {
     var v = [];
     v[0] = u[0]*u[0] - u[1]*u[1];
     v[1] = 2*u[0]*u[1];
     return v;
+}
+
+function mandel(){
+
 }
 
 // f2: R -> R
@@ -110,7 +121,7 @@ function f2(u) {
 // f3: R -> R
 function f3(u) {
     var v = [];
-    var w = f11(u);
+    var w = f1(u);
     v[0] = u[0] - (w[0]-u[0])*t;
     v[1] = u[1] - (w[1]-u[1])*t;
     return v;
